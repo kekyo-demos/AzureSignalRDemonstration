@@ -1,0 +1,103 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" >
+<!--
+////////////////////////////////////////////////////////////////////////////////////////////////////
+//
+// AzureSignalRDemonstration -
+//     SignalR boot camp on Windows Azure Datacenter came to Japan festival in NAGOYA.
+//
+// Copyright (c) Kouji Matsui, All rights reserved.
+//
+// Redistribution and use in source and binary forms, with or without modification,
+// are permitted provided that the following conditions are met:
+//
+// * Redistributions of source code must retain the above copyright notice,
+//   this list of conditions and the following disclaimer.
+// * Redistributions in binary form must reproduce the above copyright notice,
+//   this list of conditions and the following disclaimer in the documentation
+//   and/or other materials provided with the distribution.
+//
+// THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
+// AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO,
+// THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED.
+// IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT,
+// INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES
+// (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;
+// LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION)
+// HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY,
+// OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE,
+// EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+//
+////////////////////////////////////////////////////////////////////////////////////////////////////
+-->
+<head>
+	<title>AzureSignalRSilverlight</title>
+	<style type="text/css">
+	html, body {
+		height: 100%;
+		overflow: auto;
+	}
+	body {
+		padding: 0;
+		margin: 0;
+	}
+	#silverlightControlHost {
+		height: 100%;
+		text-align:center;
+	}
+	</style>
+	<script type="text/javascript" src="Silverlight.js"></script>
+	<script type="text/javascript">
+		function onSilverlightError(sender, args) {
+			var appSource = "";
+			if (sender != null && sender != 0) {
+			  appSource = sender.getHost().Source;
+			}
+			
+			var errorType = args.ErrorType;
+			var iErrorCode = args.ErrorCode;
+
+			if (errorType == "ImageError" || errorType == "MediaError") {
+			  return;
+			}
+
+			var errMsg = "Silverlight アプリケーションのハンドルされないエラー " +  appSource + "\n" ;
+
+			errMsg += "コード: "+ iErrorCode + "    \n";
+			errMsg += "カテゴリ: " + errorType + "       \n";
+			errMsg += "メッセージ: " + args.ErrorMessage + "     \n";
+
+			if (errorType == "ParserError") {
+				errMsg += "ファイル: " + args.xamlFile + "     \n";
+				errMsg += "行: " + args.lineNumber + "     \n";
+				errMsg += "位置: " + args.charPosition + "     \n";
+			}
+			else if (errorType == "RuntimeError") {           
+				if (args.lineNumber != 0) {
+					errMsg += "行: " + args.lineNumber + "     \n";
+					errMsg += "位置: " +  args.charPosition + "     \n";
+				}
+				errMsg += "メソッド名: " + args.methodName + "     \n";
+			}
+
+			throw new Error(errMsg);
+		}
+	</script>
+</head>
+<body>
+	<div align="right"><a href="publish.htm" target="_blank">For WPF 4.5.1 Client</a></div>
+	<form id="form1" runat="server" style="height:100%">
+	<div id="silverlightControlHost">
+		<object data="data:application/x-silverlight-2," type="application/x-silverlight-2" width="100%" height="100%">
+		  <param name="source" value="ClientBin/AzureSignalRSilverlight.xap"/>
+		  <param name="onError" value="onSilverlightError" />
+		  <param name="background" value="white" />
+		  <param name="minRuntimeVersion" value="5.0.61118.0" />
+		  <param name="autoUpgrade" value="true" />
+		  <a href="http://go.microsoft.com/fwlink/?LinkID=149156&v=5.0.61118.0" style="text-decoration:none">
+			  <img src="http://go.microsoft.com/fwlink/?LinkId=161376" alt="Microsoft Silverlight の取得" style="border-style:none"/>
+		  </a>
+		</object><iframe id="_sl_historyFrame" style="visibility:hidden;height:0px;width:0px;border:0px"></iframe></div>
+	</form>
+</body>
+</html>
